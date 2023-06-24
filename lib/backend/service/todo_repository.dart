@@ -1,10 +1,10 @@
 import '../db_initialize/db_initialize.dart';
 import '../models/todo.dart';
 
-class TodoService {
-  static final TodoService service = TodoService._init();
+class TodoRepository {
+  static final TodoRepository repository = TodoRepository._init();
 
-  TodoService._init();
+  TodoRepository._init();
 
   Future<void> create(Todo todo) async {
     final db = await ExpensesDatabase.instance.database;

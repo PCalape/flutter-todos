@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_todos/backend/service/todo_repository.dart';
 import 'package:flutter_todos/home/home.dart';
 import 'package:flutter_todos/l10n/l10n.dart';
 import 'package:flutter_todos/theme/theme.dart';
 import 'package:todos_repository/todos_repository.dart';
 
 class App extends StatelessWidget {
-  const App({required this.todosRepository, super.key});
+  const App(
+      {required this.todosRepository, required this.todoRepository, super.key});
 
   final TodosRepository todosRepository;
+  final TodoRepository todoRepository;
 
   @override
   Widget build(BuildContext context) {

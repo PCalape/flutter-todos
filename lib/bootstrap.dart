@@ -8,6 +8,8 @@ import 'package:flutter_todos/app/app_bloc_observer.dart';
 import 'package:todos_api/todos_api.dart';
 import 'package:todos_repository/todos_repository.dart';
 
+import 'backend/service/todo_repository.dart';
+
 void bootstrap({required TodosApi todosApi}) {
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
@@ -16,9 +18,13 @@ void bootstrap({required TodosApi todosApi}) {
   Bloc.observer = const AppBlocObserver();
 
   final todosRepository = TodosRepository(todosApi: todosApi);
+  final todoRepository = TodoRepository.repository;
 
   runZonedGuarded(
-    () => runApp(App(todosRepository: todosRepository)),
+    () => runApp(App(
+      todosRepository: todosRepository,
+      todoRepository: todoRepository,
+    )),
     (error, stackTrace) => log(error.toString(), stackTrace: stackTrace),
   );
 }
