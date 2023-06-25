@@ -49,6 +49,7 @@ class EditTodoBloc extends Bloc<EditTodoEvent, EditTodoState> {
         Todo.fromJson({
           'title': state.title,
           'description': state.description,
+          'isCompleted': false,
         }));
 
     try {

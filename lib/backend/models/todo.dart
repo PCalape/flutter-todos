@@ -46,7 +46,7 @@ class Todo extends Base {
         id: json.parseString(TodoFields.id),
         title: json.parseString(TodoFields.title),
         description: json.parseString(TodoFields.description),
-        isCompleted: json.parseBool(TodoFields.isCompleted),
+        isCompleted: TodoFields.isCompleted == 1,
         createdAt: DateTime.tryParse(json.parseString(TodoFields.createdAt)),
         updatedAt: DateTime.tryParse(json.parseString(TodoFields.updatedAt)),
         deletedAt: DateTime.tryParse(json.parseString(TodoFields.deletedAt)),
@@ -56,7 +56,7 @@ class Todo extends Base {
         TodoFields.id: uuid.v4(),
         TodoFields.title: title,
         TodoFields.description: description,
-        TodoFields.isCompleted: isCompleted,
+        TodoFields.isCompleted: isCompleted == true ? 1 : 0,
         TodoFields.createdAt: DateTime.now().toUtc().toString(),
       };
 }
