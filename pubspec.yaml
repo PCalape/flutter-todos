@@ -15,12 +15,6 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: ^0.18.0
-  local_storage_todos_api:
-    path: packages/local_storage_todos_api
-  todos_api:
-    path: packages/todos_api
-  todos_repository:
-    path: packages/todos_repository
 
   # Database
   get_it: ^7.2.0
