@@ -1,15 +1,17 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:todos_repository/todos_repository.dart';
+import 'package:flutter_todos/backend/repository/todo_repository.dart';
+
+import '../../backend/models/todo.dart';
 
 part 'edit_todo_event.dart';
 part 'edit_todo_state.dart';
 
 class EditTodoBloc extends Bloc<EditTodoEvent, EditTodoState> {
   EditTodoBloc({
-    required TodosRepository todosRepository,
+    required TodoRepository todoRepository,
     required Todo? initialTodo,
-  })  : _todosRepository = todosRepository,
+  })  : _todoRepository = todoRepository,
         super(
           EditTodoState(
             initialTodo: initialTodo,
@@ -22,7 +24,7 @@ class EditTodoBloc extends Bloc<EditTodoEvent, EditTodoState> {
     on<EditTodoSubmitted>(_onSubmitted);
   }
 
-  final TodosRepository _todosRepository;
+  final TodoRepository _todoRepository;
 
   void _onTitleChanged(
     EditTodoTitleChanged event,
@@ -43,13 +45,14 @@ class EditTodoBloc extends Bloc<EditTodoEvent, EditTodoState> {
     Emitter<EditTodoState> emit,
   ) async {
     emit(state.copyWith(status: EditTodoStatus.loading));
-    final todo = (state.initialTodo ?? Todo(title: '')).copyWith(
-      title: state.title,
-      description: state.description,
-    );
+    final todo = (state.initialTodo ??
+        Todo.fromJson({
+          'title': state.title,
+          'description': state.description,
+        }));
 
     try {
-      await _todosRepository.saveTodo(todo);
+      await _todoRepository.create(todo);
       emit(state.copyWith(status: EditTodoStatus.success));
     } catch (e) {
       emit(state.copyWith(status: EditTodoStatus.failure));

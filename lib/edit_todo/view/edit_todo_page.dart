@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_todos/backend/repository/todo_repository.dart';
 import 'package:flutter_todos/edit_todo/edit_todo.dart';
 import 'package:flutter_todos/l10n/l10n.dart';
-import 'package:todos_repository/todos_repository.dart';
+
+import '../../backend/models/todo.dart';
 
 class EditTodoPage extends StatelessWidget {
   const EditTodoPage({super.key});
@@ -14,7 +16,7 @@ class EditTodoPage extends StatelessWidget {
       fullscreenDialog: true,
       builder: (context) => BlocProvider(
         create: (context) => EditTodoBloc(
-          todosRepository: context.read<TodosRepository>(),
+          todoRepository: context.read<TodoRepository>(),
           initialTodo: initialTodo,
         ),
         child: const EditTodoPage(),

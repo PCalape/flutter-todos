@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_todos/backend/repository/todo_repository.dart';
 import 'package:flutter_todos/l10n/l10n.dart';
 import 'package:flutter_todos/stats/stats.dart';
-import 'package:todos_repository/todos_repository.dart';
 
 class StatsPage extends StatelessWidget {
   const StatsPage({super.key});
@@ -11,7 +11,7 @@ class StatsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => StatsBloc(
-        todosRepository: context.read<TodosRepository>(),
+        todoRepository: context.read<TodoRepository>(),
       )..add(const StatsSubscriptionRequested()),
       child: const StatsView(),
     );

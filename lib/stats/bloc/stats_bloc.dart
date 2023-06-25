@@ -1,19 +1,21 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:todos_repository/todos_repository.dart';
+import 'package:flutter_todos/backend/repository/todo_repository.dart';
+
+import '../../backend/models/todo.dart';
 
 part 'stats_event.dart';
 part 'stats_state.dart';
 
 class StatsBloc extends Bloc<StatsEvent, StatsState> {
   StatsBloc({
-    required TodosRepository todosRepository,
-  })  : _todosRepository = todosRepository,
+    required TodoRepository todoRepository,
+  })  : _todoRepository = todoRepository,
         super(const StatsState()) {
     on<StatsSubscriptionRequested>(_onSubscriptionRequested);
   }
 
-  final TodosRepository _todosRepository;
+  final TodoRepository _todoRepository;
 
   Future<void> _onSubscriptionRequested(
     StatsSubscriptionRequested event,
@@ -22,11 +24,11 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     emit(state.copyWith(status: StatsStatus.loading));
 
     await emit.forEach<List<Todo>>(
-      _todosRepository.getTodos(),
+      Stream.fromFuture(_todoRepository.fetchAllTodos()),
       onData: (todos) => state.copyWith(
         status: StatsStatus.success,
         completedTodos: todos.where((todo) => todo.isCompleted).length,
-        activeTodos: todos.where((todo) => !todo.isCompleted).length,
+        activeTodos: todos.where((todo) => todo.isCompleted).length,
       ),
       onError: (_, __) => state.copyWith(status: StatsStatus.failure),
     );

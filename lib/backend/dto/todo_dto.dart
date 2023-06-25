@@ -1,8 +1,10 @@
 class TodoDto {
   final String title;
   final String description;
-  final String? isCompleted;
+  final bool isCompleted;
 
   const TodoDto(
-      {required this.title, required this.description, this.isCompleted});
+      {required this.title,
+      required this.description,
+      required this.isCompleted});
 }

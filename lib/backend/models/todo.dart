@@ -23,13 +23,13 @@ class Todo extends Base {
   final String? id;
   final String title;
   final String description;
-  final String? isCompleted;
+  final bool isCompleted;
 
   const Todo._({
     this.id,
     required this.title,
     required this.description,
-    this.isCompleted,
+    required this.isCompleted,
     super.createdAt,
     super.updatedAt,
     super.deletedAt,
@@ -44,9 +44,9 @@ class Todo extends Base {
 
   factory Todo.fromJson(Map<String, Object?> json) => Todo._(
         id: json.parseString(TodoFields.id),
-        title: json.parseString(TodoFields.description),
+        title: json.parseString(TodoFields.title),
         description: json.parseString(TodoFields.description),
-        isCompleted: json.parseString(TodoFields.isCompleted),
+        isCompleted: json.parseBool(TodoFields.isCompleted),
         createdAt: DateTime.tryParse(json.parseString(TodoFields.createdAt)),
         updatedAt: DateTime.tryParse(json.parseString(TodoFields.updatedAt)),
         deletedAt: DateTime.tryParse(json.parseString(TodoFields.deletedAt)),

@@ -1,4 +1,4 @@
-import 'package:todos_repository/todos_repository.dart';
+import '../../backend/models/todo.dart';
 
 enum TodosViewFilter { all, activeOnly, completedOnly }
 
@@ -8,9 +8,9 @@ extension TodosViewFilterX on TodosViewFilter {
       case TodosViewFilter.all:
         return true;
       case TodosViewFilter.activeOnly:
-        return !todo.isCompleted;
+        return todo.isCompleted!;
       case TodosViewFilter.completedOnly:
-        return todo.isCompleted;
+        return todo.isCompleted!;
     }
   }
 
