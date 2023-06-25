@@ -40,7 +40,7 @@ class TodoListTile extends StatelessWidget {
           todo.title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: todo.isCompleted!
+          style: todo.isCompleted
               ? null
               : TextStyle(
                   color: captionColor,
