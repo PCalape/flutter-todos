@@ -24,7 +24,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
     emit(state.copyWith(status: StatsStatus.loading));
 
     await emit.forEach<List<Todo>>(
-      Stream.fromFuture(_todoRepository.fetchAllTodos()),
+      _todoRepository.fetchAllTodos(),
       onData: (todos) => state.copyWith(
         status: StatsStatus.success,
         completedTodos: todos.where((todo) => todo.isCompleted).length,

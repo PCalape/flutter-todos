@@ -31,7 +31,7 @@ class TodosOverviewBloc extends Bloc<TodosOverviewEvent, TodosOverviewState> {
     emit(state.copyWith(status: () => TodosOverviewStatus.loading));
 
     await emit.forEach<List<Todo>>(
-      Stream.fromFuture(_todoRepository.fetchAllTodos()),
+      _todoRepository.fetchAllTodos(),
       onData: (todos) => state.copyWith(
         status: () => TodosOverviewStatus.success,
         todos: () => todos,
