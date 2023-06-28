@@ -46,7 +46,7 @@ class Todo extends Base {
         id: json.parseString(TodoFields.id),
         title: json.parseString(TodoFields.title),
         description: json.parseString(TodoFields.description),
-        isCompleted: TodoFields.isCompleted == 1,
+        isCompleted: json.parseInt(TodoFields.isCompleted) == 1,
         createdAt: DateTime.tryParse(json.parseString(TodoFields.createdAt)),
         updatedAt: DateTime.tryParse(json.parseString(TodoFields.updatedAt)),
         deletedAt: DateTime.tryParse(json.parseString(TodoFields.deletedAt)),
@@ -58,5 +58,14 @@ class Todo extends Base {
         TodoFields.description: description,
         TodoFields.isCompleted: isCompleted == true ? 1 : 0,
         TodoFields.createdAt: DateTime.now().toUtc().toString(),
+      };
+
+  Map<String, Object?> toJsonUpdate() => {
+        TodoFields.id: id,
+        TodoFields.title: title,
+        TodoFields.description: description,
+        TodoFields.isCompleted: isCompleted == true ? 1 : 0,
+        TodoFields.createdAt: createdAt.toString(),
+        TodoFields.updatedAt: DateTime.now().toUtc().toString(),
       };
 }

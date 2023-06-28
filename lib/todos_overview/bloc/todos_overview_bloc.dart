@@ -47,8 +47,8 @@ class TodosOverviewBloc extends Bloc<TodosOverviewEvent, TodosOverviewState> {
     Emitter<TodosOverviewState> emit,
   ) async {
     await _todoRepository.create(Todo.fromJson({
-      ...event.todo.toJsonCreate(),
-      'isCompleted': event.todo.isCompleted,
+      ...event.todo.toJsonUpdate(),
+      'isCompleted': event.todo.isCompleted ? 0 : 1,
     }));
   }
 

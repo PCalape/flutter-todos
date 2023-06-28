@@ -31,12 +31,27 @@ class TodoRepository {
 
   Future<void> create(Todo todo) async {
     try {
-      //data saving
       final db = await ExpensesDatabase.instance.database;
-      await db.insert(tableTodos, todo.toJsonCreate());
+
+      //data saving
+      List existingTodo =
+          await db.query(tableTodos, where: 'id = ?', whereArgs: [todo.id]);
+      if (existingTodo.isNotEmpty) {
+        await db.update(tableTodos, todo.toJsonUpdate(),
+            where: 'id = ?', whereArgs: [todo.id]);
+      } else {
+        await db.insert(tableTodos, todo.toJsonCreate());
+      }
 
       //stream update
-      _todoStreamController.add([todo, ..._todoStreamController.value]);
+      final todos = [..._todoStreamController.value];
+      final todoIndex = todos.indexWhere((t) => t.id == todo.id);
+      if (todoIndex >= 0) {
+        todos[todoIndex] = todo;
+      } else {
+        todos.add(todo);
+      }
+      _todoStreamController.add(todos);
     } catch (e) {
       print(e);
       throw new Exception(e);
