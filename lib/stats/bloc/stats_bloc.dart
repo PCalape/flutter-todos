@@ -28,7 +28,7 @@ class StatsBloc extends Bloc<StatsEvent, StatsState> {
       onData: (todos) => state.copyWith(
         status: StatsStatus.success,
         completedTodos: todos.where((todo) => todo.isCompleted).length,
-        activeTodos: todos.where((todo) => todo.isCompleted).length,
+        activeTodos: todos.where((todo) => !todo.isCompleted).length,
       ),
       onError: (_, __) => state.copyWith(status: StatsStatus.failure),
     );

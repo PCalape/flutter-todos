@@ -41,11 +41,11 @@ class TodoListTile extends StatelessWidget {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: todo.isCompleted
-              ? null
-              : TextStyle(
+              ? TextStyle(
                   color: captionColor,
                   decoration: TextDecoration.lineThrough,
-                ),
+                )
+              : null,
         ),
         subtitle: Text(
           todo.description,
