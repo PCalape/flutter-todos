@@ -49,21 +49,9 @@ class TodoRepository {
       if (todoIndex >= 0) {
         todos[todoIndex] = todo;
       } else {
-        todos.add(todo);
+        todos.insert(0, todo);
       }
       _todoStreamController.add(todos);
-    } catch (e) {
-      print(e);
-      throw new Exception(e);
-    }
-  }
-
-  Future<Todo> fetchTodoById(String id) async {
-    try {
-      final db = await ExpensesDatabase.instance.database;
-      List todo = await db.query(tableTodos, where: "id = ?", whereArgs: [id]);
-      if (todo.isEmpty) throw Exception('Todo not found');
-      return Todo.fromJson(todo[0]);
     } catch (e) {
       print(e);
       throw new Exception(e);
@@ -74,6 +62,34 @@ class TodoRepository {
     try {
       final db = await ExpensesDatabase.instance.database;
       await db.delete(tableTodos, where: "id = ?", whereArgs: [id]);
+
+      //stream update
+      final todos = [..._todoStreamController.value];
+      final todoIndex = todos.indexWhere((t) => t.id == id);
+      todos.removeAt(todoIndex);
+      _todoStreamController.add(todos);
+    } catch (e) {
+      print(e);
+      throw new Exception(e);
+    }
+  }
+
+  Future<void> completeAll(bool areAllCompleted) async {
+    try {
+      final db = await ExpensesDatabase.instance.database;
+      if (!areAllCompleted) {
+        await db.update(tableTodos, {'isCompleted': 1},
+            where: 'isCompleted = 0');
+
+        //stream update
+        final allCompletedTodos = _todoStreamController.value.map((todo) {
+          return Todo.fromJson({
+            ...todo.toJsonUpdate(),
+            'isCompleted': 1,
+          });
+        });
+        _todoStreamController.add(allCompletedTodos.toList());
+      }
     } catch (e) {
       print(e);
       throw new Exception(e);
