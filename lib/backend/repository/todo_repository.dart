@@ -74,7 +74,7 @@ class TodoRepository {
     }
   }
 
-  Future<void> completeAll(bool areAllCompleted) async {
+  Future<void> toggleCompletion(bool areAllCompleted) async {
     try {
       final db = await ExpensesDatabase.instance.database;
       if (!areAllCompleted) {
@@ -89,7 +89,34 @@ class TodoRepository {
           });
         });
         _todoStreamController.add(allCompletedTodos.toList());
+      } else {
+        await db.update(tableTodos, {'isCompleted': 0},
+            where: 'isCompleted = 1');
+
+        //stream update
+        final allCompletedTodos = _todoStreamController.value.map((todo) {
+          return Todo.fromJson({
+            ...todo.toJsonUpdate(),
+            'isCompleted': 0,
+          });
+        });
+        _todoStreamController.add(allCompletedTodos.toList());
       }
+    } catch (e) {
+      print(e);
+      throw new Exception(e);
+    }
+  }
+
+  Future<void> clearCompleted() async {
+    try {
+      final db = await ExpensesDatabase.instance.database;
+      await db.delete(tableTodos, where: 'isCompleted = 1');
+
+      //stream update
+      final todos = [..._todoStreamController.value];
+      todos.removeWhere((todo) => todo.isCompleted);
+      _todoStreamController.add(todos);
     } catch (e) {
       print(e);
       throw new Exception(e);

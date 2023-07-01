@@ -86,13 +86,13 @@ class TodosOverviewBloc extends Bloc<TodosOverviewEvent, TodosOverviewState> {
     Emitter<TodosOverviewState> emit,
   ) async {
     final areAllCompleted = state.todos.every((todo) => todo.isCompleted);
-    await _todoRepository.completeAll(areAllCompleted);
+    await _todoRepository.toggleCompletion(areAllCompleted);
   }
 
   Future<void> _onClearCompletedRequested(
     TodosOverviewClearCompletedRequested event,
     Emitter<TodosOverviewState> emit,
   ) async {
-    // await _todoRepository.clearCompleted();
+    await _todoRepository.clearCompleted();
   }
 }
