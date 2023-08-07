@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_todos/backend/repository/todo_repository.dart';
 import 'package:flutter_todos/l10n/l10n.dart';
-import 'package:flutter_todos/stats/stats.dart';
+import 'package:flutter_todos/todo-stats/stats.dart';
 
 class StatsPage extends StatelessWidget {
   const StatsPage({super.key});

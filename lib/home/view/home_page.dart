@@ -3,8 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_todos/edit_todo/edit_todo.dart';
 import 'package:flutter_todos/expenses/view/view.dart';
 import 'package:flutter_todos/home/home.dart';
-import 'package:flutter_todos/stats/stats.dart';
 import 'package:flutter_todos/todos_overview/todos_overview.dart';
+
+import '../../todo-stats/view/stats_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
