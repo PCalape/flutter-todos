@@ -21,7 +21,7 @@ class ExpenseRepository {
   Future<List<Expense>> fetchExpensesForSeeding() async {
     try {
       final db = await ExpensesDatabase.instance.database;
-      const orderBy = '${ExpenseFields.createdAt} DESC';
+      const orderBy = '${ExpenseFields.updatedAt} DESC';
       final result = await db.query(tableExpenses, orderBy: orderBy);
       return result.map((json) => Expense.fromJson(json)).toList();
     } catch (e) {
@@ -30,29 +30,37 @@ class ExpenseRepository {
     }
   }
 
-  Future<void> create(Expense todo) async {
+  Future<void> create(Expense expense) async {
+    print(expense.id);
+    print(expense.description);
     try {
       final db = await ExpensesDatabase.instance.database;
+      Map<String, Object?> expenseUpdate = expense.toJsonUpdate();
+      Map<String, Object?> expenseCreate = expense.toJsonCreate();
+      final expenses = [..._expenseStreamController.value];
 
       //data saving
-      List existingExpense =
-          await db.query(tableExpenses, where: 'id = ?', whereArgs: [todo.id]);
+      List existingExpense = await db
+          .query(tableExpenses, where: 'id = ?', whereArgs: [expense.id]);
       if (existingExpense.isNotEmpty) {
-        await db.update(tableExpenses, todo.toJsonUpdate(),
-            where: 'id = ?', whereArgs: [todo.id]);
-      } else {
-        await db.insert(tableExpenses, todo.toJsonCreate());
-      }
+        await db.update(tableExpenses, expenseUpdate,
+            where: 'id = ?', whereArgs: [expense.id]);
 
-      //stream update
-      final expenses = [..._expenseStreamController.value];
-      final expenseIndex = expenses.indexWhere((t) => t.id == todo.id);
-      if (expenseIndex >= 0) {
-        expenses[expenseIndex] = todo;
+        //stream update
+        final expenseIndex = expenses.indexWhere((t) => t.id == expense.id);
+        if (expenseIndex >= 0) {
+          expenses[expenseIndex] = Expense.fromJson(expenseUpdate);
+        } else {
+          expenses.insert(0, Expense.fromJson(expenseUpdate));
+        }
+        _expenseStreamController.add(expenses);
       } else {
-        expenses.insert(0, todo);
+        await db.insert(tableExpenses, expenseCreate);
+
+        //stream update
+        expenses.insert(0, Expense.fromJson(expenseCreate));
+        _expenseStreamController.add(expenses);
       }
-      _expenseStreamController.add(expenses);
     } catch (e) {
       print(e);
       throw new Exception(e);
@@ -66,8 +74,8 @@ class ExpenseRepository {
 
       //stream update
       final expenses = [..._expenseStreamController.value];
-      final todoIndex = expenses.indexWhere((t) => t.id == id);
-      expenses.removeAt(todoIndex);
+      final expenseIndex = expenses.indexWhere((t) => t.id == id);
+      expenses.removeAt(expenseIndex);
       _expenseStreamController.add(expenses);
     } catch (e) {
       print(e);

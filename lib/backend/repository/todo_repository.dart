@@ -32,26 +32,32 @@ class TodoRepository {
   Future<void> create(Todo todo) async {
     try {
       final db = await ExpensesDatabase.instance.database;
+      Map<String, Object?> todoUpdate = todo.toJsonUpdate();
+      Map<String, Object?> todoCreate = todo.toJsonCreate();
+      final todos = [..._todoStreamController.value];
 
       //data saving
       List existingTodo =
           await db.query(tableTodos, where: 'id = ?', whereArgs: [todo.id]);
       if (existingTodo.isNotEmpty) {
-        await db.update(tableTodos, todo.toJsonUpdate(),
+        await db.update(tableTodos, todoUpdate,
             where: 'id = ?', whereArgs: [todo.id]);
-      } else {
-        await db.insert(tableTodos, todo.toJsonCreate());
-      }
 
-      //stream update
-      final todos = [..._todoStreamController.value];
-      final todoIndex = todos.indexWhere((t) => t.id == todo.id);
-      if (todoIndex >= 0) {
-        todos[todoIndex] = todo;
+        //stream update
+        final todoIndex = todos.indexWhere((t) => t.id == todo.id);
+        if (todoIndex >= 0) {
+          todos[todoIndex] = Todo.fromJson(todoUpdate);
+        } else {
+          todos.insert(0, Todo.fromJson(todoUpdate));
+        }
+        _todoStreamController.add(todos);
       } else {
-        todos.insert(0, todo);
+        await db.insert(tableTodos, todoCreate);
+
+        //stream update
+        todos.insert(0, Todo.fromJson(todoCreate));
+        _todoStreamController.add(todos);
       }
-      _todoStreamController.add(todos);
     } catch (e) {
       print(e);
       throw new Exception(e);

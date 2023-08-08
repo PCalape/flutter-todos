@@ -1,20 +1,13 @@
-import '../../backend/models/todo.dart';
+import 'package:flutter_todos/backend/models/expense.dart';
 
 enum ExpenseViewFilter { all, activeOnly, completedOnly }
 
 extension ExpenseViewFilterX on ExpenseViewFilter {
-  bool apply(Todo todo) {
-    switch (this) {
-      case ExpenseViewFilter.all:
-        return true;
-      case ExpenseViewFilter.activeOnly:
-        return !todo.isCompleted;
-      case ExpenseViewFilter.completedOnly:
-        return todo.isCompleted;
-    }
+  bool apply(Expense expense) {
+    return true;
   }
 
-  Iterable<Todo> applyAll(Iterable<Todo> todos) {
-    return todos.where(apply);
+  Iterable<Expense> applyAll(Iterable<Expense> expenses) {
+    return expenses.where(apply);
   }
 }

@@ -23,7 +23,7 @@ class Expense extends Base {
   final String? id;
   final String category;
   final double amount;
-  final String? description;
+  final String description;
 
   const Expense._({
     this.id,

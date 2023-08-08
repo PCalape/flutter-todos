@@ -5,38 +5,39 @@ enum ExpenseStatus { initial, loading, success, failure }
 final class ExpenseState extends Equatable {
   const ExpenseState({
     this.status = ExpenseStatus.initial,
-    this.todos = const [],
+    this.expenses = const [],
     this.filter = ExpenseViewFilter.all,
-    this.lastDeletedTodo,
+    this.lastDeletedExpense,
   });
 
   final ExpenseStatus status;
-  final List<Todo> todos;
+  final List<Expense> expenses;
   final ExpenseViewFilter filter;
-  final Todo? lastDeletedTodo;
+  final Expense? lastDeletedExpense;
 
-  Iterable<Todo> get filteredTodos => filter.applyAll(todos);
+  Iterable<Expense> get filteredExpenses => filter.applyAll(expenses);
 
   ExpenseState copyWith({
     ExpenseStatus Function()? status,
-    List<Todo> Function()? todos,
+    List<Expense> Function()? expenses,
     ExpenseViewFilter Function()? filter,
-    Todo? Function()? lastDeletedTodo,
+    Expense? Function()? lastDeletedExpense,
   }) {
     return ExpenseState(
       status: status != null ? status() : this.status,
-      todos: todos != null ? todos() : this.todos,
+      expenses: expenses != null ? expenses() : this.expenses,
       filter: filter != null ? filter() : this.filter,
-      lastDeletedTodo:
-          lastDeletedTodo != null ? lastDeletedTodo() : this.lastDeletedTodo,
+      lastDeletedExpense: lastDeletedExpense != null
+          ? lastDeletedExpense()
+          : this.lastDeletedExpense,
     );
   }
 
   @override
   List<Object?> get props => [
         status,
-        todos,
+        expenses,
         filter,
-        lastDeletedTodo,
+        lastDeletedExpense,
       ];
 }

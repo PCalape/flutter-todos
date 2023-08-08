@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_todos/edit_expense/edit_expense.dart';
 import 'package:flutter_todos/edit_todo/edit_todo.dart';
 import 'package:flutter_todos/expenses/view/view.dart';
 import 'package:flutter_todos/home/home.dart';
@@ -26,15 +27,38 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     final selectedTab = context.select((HomeCubit cubit) => cubit.state.tab);
 
+    // Define a function to handle the FloatingActionButton onPressed callback
+    void handleFloatingActionButtonPressed() {
+      switch (selectedTab) {
+        case HomeTab.todos:
+          Navigator.of(context).push(EditTodoPage.route());
+          break;
+        case HomeTab.stats:
+          Navigator.of(context).push(EditTodoPage.route());
+          break;
+        case HomeTab.expenses:
+          Navigator.of(context).push(EditExpensePage.route());
+          break;
+        default:
+          Navigator.of(context).push(EditTodoPage.route());
+          break;
+      }
+    }
+
     return Scaffold(
       body: IndexedStack(
         index: selectedTab.index,
-        children: const [TodosOverviewPage(), StatsPage(), ExpensePage()],
+        children: const [
+          TodosOverviewPage(),
+          StatsPage(),
+          ExpensePage(),
+          ExpensePage()
+        ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         key: const Key('homeView_addTodo_floatingActionButton'),
-        onPressed: () => Navigator.of(context).push(EditTodoPage.route()),
+        onPressed: handleFloatingActionButtonPressed,
         child: const Icon(Icons.add),
       ),
       bottomNavigationBar: BottomAppBar(
@@ -59,7 +83,7 @@ class HomeView extends StatelessWidget {
             ),
             _HomeTabButton(
               groupValue: selectedTab,
-              value: HomeTab.expenses,
+              value: HomeTab.income,
               icon: const Icon(Icons.arrow_circle_down_rounded),
             ),
           ],

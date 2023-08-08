@@ -1,28 +1,24 @@
 import 'package:flutter/material.dart';
-
-import '../../backend/models/todo.dart';
+import 'package:flutter_todos/backend/models/expense.dart';
 
 class ExpenseListTile extends StatelessWidget {
   const ExpenseListTile({
-    required this.todo,
+    required this.expense,
     super.key,
-    this.onToggleCompleted,
     this.onDismissed,
     this.onTap,
   });
 
-  final Todo todo;
-  final ValueChanged<bool>? onToggleCompleted;
+  final Expense expense;
   final DismissDirectionCallback? onDismissed;
   final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final captionColor = theme.textTheme.bodySmall?.color;
 
     return Dismissible(
-      key: Key('todoListTile_dismissible_${todo.id}'),
+      key: Key('expenseListTile_dismissible_${expense.id}'),
       onDismissed: onDismissed,
       direction: DismissDirection.endToStart,
       background: Container(
@@ -37,29 +33,14 @@ class ExpenseListTile extends StatelessWidget {
       child: ListTile(
         onTap: onTap,
         title: Text(
-          todo.title,
+          expense.amount.toString(),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: todo.isCompleted
-              ? TextStyle(
-                  color: captionColor,
-                  decoration: TextDecoration.lineThrough,
-                )
-              : null,
         ),
         subtitle: Text(
-          todo.description,
+          expense.description.toString(),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-        ),
-        leading: Checkbox(
-          shape: const ContinuousRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(8)),
-          ),
-          value: todo.isCompleted,
-          onChanged: onToggleCompleted == null
-              ? null
-              : (value) => onToggleCompleted!(value!),
         ),
         trailing: onTap == null ? null : const Icon(Icons.chevron_right),
       ),

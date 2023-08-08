@@ -24,6 +24,6 @@ class ExpensesDB {
     ''');
 
     await db.execute(
-        '''CREATE INDEX IF NOT EXISTS todo_id_index ON $tableExpenses(${ExpenseFields.id})''');
+        '''CREATE INDEX IF NOT EXISTS expense_id_index ON $tableExpenses(${ExpenseFields.id})''');
   }
 }

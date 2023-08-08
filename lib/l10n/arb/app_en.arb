@@ -108,5 +108,122 @@
   "statsActiveTodoCountLabel": "Active todos",
   "@statsActiveTodoCountLabel": {
     "description": "Label text shown in the active todos count section of the Stats Page"
+  },
+  "expensesOverviewAppBarTitle": "Flutter Expenses",
+  "@expensesOverviewAppBarTitle": {
+    "description": "Title text shown in the AppBar of the Expenses Overview Page"
+  },
+  "expensesOverviewFilterTooltip": "Filter",
+  "@expensesOverviewFilterTooltip": {
+    "description": "Tooltip text shown in the filter dropdown of the Expenses Overview Page"
+  },
+  "expensesOverviewFilterAll": "All",
+  "@expensesOverviewFilterAll": {
+    "description": "Text shown in the filter dropdown of the Expenses Overview Page for the option to display all expenses"
+  },
+  "expensesOverviewFilterActiveOnly": "Active only",
+  "@expensesOverviewFilterActiveOnly": {
+    "description": "Text shown in the filter dropdown of the Expenses Overview Page for the option to display active expenses only"
+  },
+  "expensesOverviewFilterCompletedOnly": "Completed only",
+  "@expensesOverviewFilterCompletedOnly": {
+    "description": "Text shown in the filter dropdown of the Expenses Overview Page for the option to display completed expenses only"
+  },
+  "expensesOverviewMarkAllCompleteButtonText": "Mark all complete",
+  "@expensesOverviewMarkAllCompleteButtonText": {
+    "description": "Button text shown in the options dropdown of the Expenses Overview Page that marks all current expenses as complete"
+  },
+  "expensesOverviewClearCompletedButtonText": "Clear completed",
+  "@expensesOverviewClearCompletedButtonText": {
+    "description": "Button text shown in the options dropdown of the Expenses Overview Page that deletes all completed expenses"
+  },
+  "expensesOverviewEmptyText": "No expenses found with the selected filters.",
+  "@expensesOverviewEmptyText": {
+    "description": "Text shown in the Expenses Overview Page when no expenses are found with the selected filters"
+  },
+  "expensesOverviewExpenseDeletedSnackbarText": "Expense \"{expenseTitle}\" deleted.",
+  "@expensesOverviewExpenseDeletedSnackbarText": {
+    "description": "Snackbar text shown when a expense is deleted from the Expenses Overview Page",
+    "placeholders": {
+      "expenseTitle": {
+        "description": "The title of the expense that was deleted"
+      }
+    }
+  },
+  "expensesOverviewUndoDeletionButtonText": "Undo",
+  "@expensesOverviewUndoDeletionButtonText": {
+    "description": "Button text shown in the snackbar that undoes a deletion of a expense"
+  },
+  "expensesOverviewErrorSnackbarText": "An error occurred while loading expenses.",
+  "@expensesOverviewErrorSnackbarText": {
+    "description": "Snackbar text shown when an error occurs while loading expenses"
+  },
+  "expensesOverviewOptionsTooltip": "Options",
+  "@expensesOverviewOptionsTooltip": {
+    "description": "Tooltip text shown in the options dropdown of the Expenses Overview Page"
+  },
+  "expensesOverviewOptionsMarkAllComplete": "Mark all as completed",
+  "@expensesOverviewOptionsMarkAllComplete": {
+    "description": "Button text shown in the options dropdown of the Expenses Overview Page that marks all expenses as complete"
+  },
+  "expensesOverviewOptionsMarkAllIncomplete": "Mark all as incomplete",
+  "@expensesOverviewOptionsMarkAllIncomplete": {
+    "description": "Button text shown in the options dropdown of the Expenses Overview Page that marks all expenses as incomplete"
+  },
+  "expensesOverviewOptionsClearCompleted": "Clear completed",
+  "@expensesOverviewOptionsClearCompleted": {
+    "description": "Button text shown in the options dropdown of the Expenses Overview Page that deletes all completed expenses"
+  },
+  "expenseDetailsAppBarTitle": "Expense Details",
+  "@expenseDetailsAppBarTitle": {
+    "description": "Title text shown in the AppBar of the Expense Details Page"
+  },
+  "expenseDetailsDeleteButtonTooltip": "Delete",
+  "@expenseDetailsDeleteButtonTooltip": {
+    "description": "Tooltip text shown in the delete button on the Expense Details Page"
+  },
+  "expenseDetailsEditButtonTooltip": "Edit",
+  "@expenseDetailsEditButtonTooltip": {
+    "description": "Tooltip text shown in the edit button on the Expense Details Page"
+  },
+  "editExpenseEditAppBarTitle": "Edit Expense",
+  "@editExpenseEditAppBarTitle": {
+    "description": "Title text shown in the AppBar of the Expense Edit Page when editing an existing expense"
+  },
+  "editExpenseAddAppBarTitle": "Add Expense",
+  "@editExpenseAddAppBarTitle": {
+    "description": "Title text shown in the AppBar of the Expense Edit Page when adding a new expense"
+  },
+  "editExpenseTitleLabel": "Title",
+  "@editExpenseTitleLabel": {
+    "description": "Label text shown in the title input field of the Expense Edit Page"
+  },
+  "editExpenseDescriptionLabel": "Description",
+  "@editExpenseDescriptionLabel": {
+    "description": "Label text shown in the description input field of the Expense Edit Page"
+  },
+  "editExpenseCategoryLabel": "Category",
+  "@editExpenseCategoryLabel": {
+    "description": "Label text shown in the category input field of the Expense Edit Page"
+  },
+  "editExpenseAmountLabel": "Amount",
+  "@editExpenseAmountLabel": {
+    "description": "Label text shown in the amount input field of the Expense Edit Page"
+  },
+  "editExpenseSaveButtonTooltip": "Save changes",
+  "@editExpenseSaveButtonTooltip": {
+    "description": "Tooltip text shown in the save button on the Expense Edit Page"
+  },
+  "statsAppBarTitle": "Stats",
+  "@statsAppBarTitle": {
+    "description": "Title text shown in the AppBar of the Stats Page"
+  },
+  "statsCompletedExpenseCountLabel": "Completed expenses",
+  "@statsCompletedExpenseCountLabel": {
+    "description": "Label text shown in the completed expenses count section of the Stats Page"
+  },
+  "statsActiveExpenseCountLabel": "Active expenses",
+  "@statsActiveExpenseCountLabel": {
+    "description": "Label text shown in the active expenses count section of the Stats Page"
   }
 }

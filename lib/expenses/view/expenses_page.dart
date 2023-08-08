@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_todos/backend/repository/todo_repository.dart';
+import 'package:flutter_todos/backend/repository/expense_repository.dart';
+import 'package:flutter_todos/edit_expense/edit_expense.dart';
 import 'package:flutter_todos/expenses/widgets/widgets.dart';
 import 'package:flutter_todos/l10n/l10n.dart';
 
-import '../../edit_todo/view/edit_todo_page.dart';
 import '../bloc/expenses_bloc.dart';
 
 class ExpensePage extends StatelessWidget {
@@ -15,7 +15,7 @@ class ExpensePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ExpenseBloc(
-        todoRepository: context.read<TodoRepository>(),
+        expenseRepository: context.read<ExpenseRepository>(),
       )..add(const ExpenseSubscriptionRequested()),
       child: const ExpenseView(),
     );
@@ -31,11 +31,7 @@ class ExpenseView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.todosOverviewAppBarTitle),
-        actions: const [
-          ExpenseFilterButton(),
-          ExpenseOptionsButton(),
-        ],
+        title: Text(l10n.expensesOverviewAppBarTitle),
       ),
       body: MultiBlocListener(
         listeners: [
@@ -48,7 +44,7 @@ class ExpenseView extends StatelessWidget {
                   ..hideCurrentSnackBar()
                   ..showSnackBar(
                     SnackBar(
-                      content: Text(l10n.todosOverviewErrorSnackbarText),
+                      content: Text(l10n.expensesOverviewErrorSnackbarText),
                     ),
                   );
               }
@@ -56,22 +52,22 @@ class ExpenseView extends StatelessWidget {
           ),
           BlocListener<ExpenseBloc, ExpenseState>(
             listenWhen: (previous, current) =>
-                previous.lastDeletedTodo != current.lastDeletedTodo &&
-                current.lastDeletedTodo != null,
+                previous.lastDeletedExpense != current.lastDeletedExpense &&
+                current.lastDeletedExpense != null,
             listener: (context, state) {
-              final deletedTodo = state.lastDeletedTodo!;
+              final deletedExpense = state.lastDeletedExpense!;
               final messenger = ScaffoldMessenger.of(context);
               messenger
                 ..hideCurrentSnackBar()
                 ..showSnackBar(
                   SnackBar(
                     content: Text(
-                      l10n.todosOverviewTodoDeletedSnackbarText(
-                        deletedTodo.title,
+                      l10n.expensesOverviewExpenseDeletedSnackbarText(
+                        deletedExpense.description,
                       ),
                     ),
                     action: SnackBarAction(
-                      label: l10n.todosOverviewUndoDeletionButtonText,
+                      label: l10n.expensesOverviewUndoDeletionButtonText,
                       onPressed: () {
                         messenger.hideCurrentSnackBar();
                         context
@@ -86,7 +82,7 @@ class ExpenseView extends StatelessWidget {
         ],
         child: BlocBuilder<ExpenseBloc, ExpenseState>(
           builder: (context, state) {
-            if (state.todos.isEmpty) {
+            if (state.expenses.isEmpty) {
               if (state.status == ExpenseStatus.loading) {
                 return const Center(child: CupertinoActivityIndicator());
               } else if (state.status != ExpenseStatus.success) {
@@ -94,7 +90,7 @@ class ExpenseView extends StatelessWidget {
               } else {
                 return Center(
                   child: Text(
-                    l10n.todosOverviewEmptyText,
+                    l10n.expensesOverviewEmptyText,
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                 );
@@ -104,23 +100,17 @@ class ExpenseView extends StatelessWidget {
             return CupertinoScrollbar(
               child: ListView(
                 children: [
-                  for (final todo in state.filteredTodos)
+                  for (final expense in state.filteredExpenses)
                     ExpenseListTile(
-                      todo: todo,
-                      onToggleCompleted: (isCompleted) {
-                        context.read<ExpenseBloc>().add(
-                              ExpenseCompletionToggled(
-                                todo: todo,
-                                isCompleted: isCompleted,
-                              ),
-                            );
-                      },
+                      expense: expense,
                       onDismissed: (_) {
-                        context.read<ExpenseBloc>().add(ExpenseDeleted(todo));
+                        context
+                            .read<ExpenseBloc>()
+                            .add(ExpenseDeleted(expense));
                       },
                       onTap: () {
                         Navigator.of(context).push(
-                          EditTodoPage.route(initialTodo: todo),
+                          EditExpensePage.route(initialExpense: expense),
                         );
                       },
                     ),

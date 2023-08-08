@@ -45,12 +45,18 @@ class EditTodoBloc extends Bloc<EditTodoEvent, EditTodoState> {
     Emitter<EditTodoState> emit,
   ) async {
     emit(state.copyWith(status: EditTodoStatus.loading));
-    final todo = (state.initialTodo ??
-        Todo.fromJson({
-          'title': state.title,
-          'description': state.description,
-          'isCompleted': false,
-        }));
+    final todo = (state.initialTodo != null
+        ? Todo.fromJson({
+            'id': state.initialTodo?.id,
+            'title': state.title,
+            'description': state.description,
+            'isCompleted': false,
+          })
+        : Todo.fromJson({
+            'title': state.title,
+            'description': state.description,
+            'isCompleted': false,
+          }));
 
     try {
       await _todoRepository.create(todo);
