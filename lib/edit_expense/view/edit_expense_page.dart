@@ -163,6 +163,7 @@ class _AmountField extends StatelessWidget {
 
     return TextFormField(
       key: const Key('editExpenseView_amount_textFormField'),
+      keyboardType: TextInputType.numberWithOptions(decimal: true),
       initialValue: state.amount.toString(),
       decoration: InputDecoration(
         enabled: !state.status.isLoadingOrSuccess,
