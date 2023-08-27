@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "todosOverviewAppBarTitle": "Flutter Todos",
+  "todosOverviewAppBarTitle": "Todos",
   "@todosOverviewAppBarTitle": {
     "description": "Title text shown in the AppBar of the Todos Overview Page"
   },
@@ -109,7 +109,7 @@
   "@statsActiveTodoCountLabel": {
     "description": "Label text shown in the active todos count section of the Stats Page"
   },
-  "expensesOverviewAppBarTitle": "Flutter Expenses",
+  "expensesOverviewAppBarTitle": "Expenses",
   "@expensesOverviewAppBarTitle": {
     "description": "Title text shown in the AppBar of the Expenses Overview Page"
   },
