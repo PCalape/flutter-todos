@@ -52,9 +52,6 @@ class EditExpenseBloc extends Bloc<EditExpenseEvent, EditExpenseState> {
     Emitter<EditExpenseState> emit,
   ) async {
     emit(state.copyWith(status: EditExpenseStatus.loading));
-    print(state.initialExpense?.id);
-    print(state.initialExpense?.description);
-    print(state.description);
     final expense = (state.initialExpense != null
         ? Expense.fromJson({
             'id': state.initialExpense?.id,

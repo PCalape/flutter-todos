@@ -31,8 +31,6 @@ class ExpenseRepository {
   }
 
   Future<void> create(Expense expense) async {
-    print(expense.id);
-    print(expense.description);
     try {
       final db = await ExpensesDatabase.instance.database;
       Map<String, Object?> expenseUpdate = expense.toJsonUpdate();

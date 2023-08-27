@@ -5,7 +5,6 @@ import 'package:sqflite/sqflite.dart';
 
 import 'accounts_db.dart';
 import 'expenses_db.dart';
-import 'todos_db.dart';
 import 'users_db.dart';
 
 class ExpensesDatabase {
@@ -38,7 +37,6 @@ class ExpensesDatabase {
   Future<void> _createDB(Database db, int version) async {
     UsersDB.createDB(db, version);
     AccountsDB.createDB(db, version);
-    TodosDB.createDB(db, version);
   }
 
   Future<void> _upgradeDB(Database db, int oldVersion, int newVersion) async {
