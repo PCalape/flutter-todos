@@ -40,9 +40,9 @@ class HomeView extends StatelessWidget {
         index: selectedTab.index,
         children: const [ExpensePage(), ExpensePage()],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        key: const Key('homeView_addTodo_floatingActionButton'),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton.large(
+        key: const Key('homeView_addExpense_floatingActionButton'),
         onPressed: handleFloatingActionButtonPressed,
         child: const Icon(Icons.add),
       ),
