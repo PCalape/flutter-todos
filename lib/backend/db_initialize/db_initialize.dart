@@ -37,6 +37,7 @@ class ExpensesDatabase {
   Future<void> _createDB(Database db, int version) async {
     UsersDB.createDB(db, version);
     AccountsDB.createDB(db, version);
+    ExpensesDB.createDB(db, version);
   }
 
   Future<void> _upgradeDB(Database db, int oldVersion, int newVersion) async {
