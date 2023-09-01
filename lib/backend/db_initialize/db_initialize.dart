@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter_todos/backend/db_initialize/income_db.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -9,7 +10,7 @@ import 'users_db.dart';
 
 class IncomeDatabase {
   static const _databaseName = 'expenses_app.db';
-  static const _databaseVersion = 2;
+  static const _databaseVersion = 3;
   static final IncomeDatabase instance = IncomeDatabase._init();
 
   static Database? _database;
@@ -38,10 +39,12 @@ class IncomeDatabase {
     UsersDB.createDB(db, version);
     AccountsDB.createDB(db, version);
     ExpensesDB.createDB(db, version);
+    IncomeDB.createDB(db, version);
   }
 
   Future<void> _upgradeDB(Database db, int oldVersion, int newVersion) async {
     ExpensesDB.createDB(db, newVersion);
+    IncomeDB.createDB(db, newVersion);
   }
 
   Future<void> _onConfigure(Database db) async {

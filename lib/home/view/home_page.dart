@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_todos/edit_expense/edit_expense.dart';
+import 'package:flutter_todos/edit_income/view/edit_income_page.dart';
 import 'package:flutter_todos/expenses/view/view.dart';
 import 'package:flutter_todos/home/home.dart';
+import 'package:flutter_todos/income/income.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -29,6 +31,9 @@ class HomeView extends StatelessWidget {
         case HomeTab.expenses:
           Navigator.of(context).push(EditExpensePage.route());
           break;
+        case HomeTab.income:
+          Navigator.of(context).push(EditIncomePage.route());
+          break;
         default:
           Navigator.of(context).push(EditExpensePage.route());
           break;
@@ -38,7 +43,7 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       body: IndexedStack(
         index: selectedTab.index,
-        children: const [ExpensePage(), ExpensePage()],
+        children: const [ExpensePage(), IncomePage()],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.large(
