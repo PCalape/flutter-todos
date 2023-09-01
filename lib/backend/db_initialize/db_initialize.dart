@@ -7,14 +7,14 @@ import 'accounts_db.dart';
 import 'expenses_db.dart';
 import 'users_db.dart';
 
-class ExpensesDatabase {
+class IncomeDatabase {
   static const _databaseName = 'expenses_app.db';
   static const _databaseVersion = 2;
-  static final ExpensesDatabase instance = ExpensesDatabase._init();
+  static final IncomeDatabase instance = IncomeDatabase._init();
 
   static Database? _database;
 
-  ExpensesDatabase._init();
+  IncomeDatabase._init();
 
   Future<Database> get database async {
     if (_database != null) return _database!;

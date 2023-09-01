@@ -5,7 +5,7 @@ import 'backend/db_initialize/db_initialize.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  ExpensesDatabase.instance.database;
+  IncomeDatabase.instance.database;
 
   bootstrap();
 }

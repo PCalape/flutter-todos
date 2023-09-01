@@ -20,7 +20,7 @@ class ExpenseRepository {
 
   Future<List<Expense>> fetchExpensesForSeeding() async {
     try {
-      final db = await ExpensesDatabase.instance.database;
+      final db = await IncomeDatabase.instance.database;
       const orderBy = '${ExpenseFields.updatedAt} DESC';
       final result = await db.query(tableExpenses, orderBy: orderBy);
       return result.map((json) => Expense.fromJson(json)).toList();
@@ -32,7 +32,7 @@ class ExpenseRepository {
 
   Future<void> create(Expense expense) async {
     try {
-      final db = await ExpensesDatabase.instance.database;
+      final db = await IncomeDatabase.instance.database;
       Map<String, Object?> expenseUpdate = expense.toJsonUpdate();
       Map<String, Object?> expenseCreate = expense.toJsonCreate();
       final expenses = [..._expenseStreamController.value];
@@ -67,7 +67,7 @@ class ExpenseRepository {
 
   Future<void> delete(String id) async {
     try {
-      final db = await ExpensesDatabase.instance.database;
+      final db = await IncomeDatabase.instance.database;
       await db.delete(tableExpenses, where: "id = ?", whereArgs: [id]);
 
       //stream update
