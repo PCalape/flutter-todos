@@ -16,6 +16,7 @@ class EditIncomeBloc extends Bloc<EditIncomeEvent, EditIncomeState> {
             initialIncome: initialIncome,
             description: initialIncome?.description ?? '',
             category: initialIncome?.category ?? '',
+            amount: initialIncome?.amount ?? 0,
           ),
         ) {
     on<EditIncomeDescriptionChanged>(_onDescriptionChanged);

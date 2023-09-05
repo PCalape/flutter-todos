@@ -16,6 +16,7 @@ class EditExpenseBloc extends Bloc<EditExpenseEvent, EditExpenseState> {
             initialExpense: initialExpense,
             description: initialExpense?.description ?? '',
             category: initialExpense?.category ?? '',
+            amount: initialExpense?.amount ?? 0,
           ),
         ) {
     on<EditExpenseDescriptionChanged>(_onDescriptionChanged);

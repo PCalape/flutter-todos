@@ -32,8 +32,17 @@ class ExpenseListTile extends StatelessWidget {
       ),
       child: ListTile(
         onTap: onTap,
+        leading: Container(
+          padding: const EdgeInsets.all(5),
+          decoration: BoxDecoration(border: Border.all()),
+          child: Text(
+            expense.amount.toString(),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
         title: Text(
-          expense.amount.toString(),
+          expense.category.toString(),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
