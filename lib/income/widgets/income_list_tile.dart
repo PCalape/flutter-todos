@@ -32,8 +32,17 @@ class IncomeListTile extends StatelessWidget {
       ),
       child: ListTile(
         onTap: onTap,
+        leading: Container(
+          padding: const EdgeInsets.all(5),
+          decoration: BoxDecoration(border: Border.all()),
+          child: Text(
+            income.amount.toString(),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
         title: Text(
-          income.amount.toString(),
+          income.category.toString(),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
