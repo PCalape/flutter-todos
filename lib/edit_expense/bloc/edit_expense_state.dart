@@ -16,6 +16,7 @@ final class EditExpenseState extends Equatable {
     this.description = '',
     this.category = '',
     this.amount = 0.0,
+    this.expenseDate,
   });
 
   final EditExpenseStatus status;
@@ -23,6 +24,7 @@ final class EditExpenseState extends Equatable {
   final String description;
   final String category;
   final double amount;
+  final DateTime? expenseDate;
 
   bool get isNewExpense => initialExpense == null;
 
@@ -32,6 +34,7 @@ final class EditExpenseState extends Equatable {
     String? description,
     String? category,
     double? amount,
+    DateTime? expenseDate,
   }) {
     return EditExpenseState(
       status: status ?? this.status,
@@ -39,10 +42,11 @@ final class EditExpenseState extends Equatable {
       description: description ?? this.description,
       category: category ?? this.category,
       amount: amount ?? this.amount,
+      expenseDate: expenseDate ?? this.expenseDate,
     );
   }
 
   @override
   List<Object?> get props =>
-      [status, initialExpense, description, category, amount];
+      [status, initialExpense, description, category, amount, expenseDate];
 }

@@ -34,6 +34,15 @@ final class EditExpenseAmountChanged extends EditExpenseEvent {
   List<Object> get props => [amount];
 }
 
+final class EditExpenseDateChanged extends EditExpenseEvent {
+  const EditExpenseDateChanged(this.expenseDate);
+
+  final DateTime expenseDate;
+
+  @override
+  List<Object> get props => [expenseDate];
+}
+
 final class EditExpenseSubmitted extends EditExpenseEvent {
   const EditExpenseSubmitted();
 }

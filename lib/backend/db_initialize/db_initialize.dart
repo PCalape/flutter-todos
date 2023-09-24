@@ -10,7 +10,7 @@ import 'users_db.dart';
 
 class IncomeDatabase {
   static const _databaseName = 'expenses_app.db';
-  static const _databaseVersion = 3;
+  static const _databaseVersion = 9;
   static final IncomeDatabase instance = IncomeDatabase._init();
 
   static Database? _database;
@@ -45,6 +45,7 @@ class IncomeDatabase {
   Future<void> _upgradeDB(Database db, int oldVersion, int newVersion) async {
     ExpensesDB.createDB(db, newVersion);
     IncomeDB.createDB(db, newVersion);
+    ExpensesDB.updateDB(db, oldVersion, newVersion);
   }
 
   Future<void> _onConfigure(Database db) async {

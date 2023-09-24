@@ -17,11 +17,13 @@ class EditExpenseBloc extends Bloc<EditExpenseEvent, EditExpenseState> {
             description: initialExpense?.description ?? '',
             category: initialExpense?.category ?? '',
             amount: initialExpense?.amount ?? 0,
+            expenseDate: initialExpense?.expenseDate ?? DateTime.now(),
           ),
         ) {
     on<EditExpenseDescriptionChanged>(_onDescriptionChanged);
     on<EditExpenseCategoryChanged>(_onCategoryChanged);
     on<EditExpenseAmountChanged>(_onAmountChanged);
+    on<EditExpenseDateChanged>(_onExpenseDateChanged);
     on<EditExpenseSubmitted>(_onSubmitted);
   }
 
@@ -48,6 +50,13 @@ class EditExpenseBloc extends Bloc<EditExpenseEvent, EditExpenseState> {
     emit(state.copyWith(amount: event.amount));
   }
 
+  void _onExpenseDateChanged(
+    EditExpenseDateChanged event,
+    Emitter<EditExpenseState> emit,
+  ) {
+    emit(state.copyWith(expenseDate: event.expenseDate));
+  }
+
   Future<void> _onSubmitted(
     EditExpenseSubmitted event,
     Emitter<EditExpenseState> emit,
@@ -59,11 +68,13 @@ class EditExpenseBloc extends Bloc<EditExpenseEvent, EditExpenseState> {
             'description': state.description,
             'category': state.category,
             'amount': state.amount,
+            'expenseDate': state.expenseDate,
           })
         : Expense.fromJson({
             'description': state.description,
             'category': state.category,
             'amount': state.amount,
+            'expenseDate': state.expenseDate,
           }));
 
     try {

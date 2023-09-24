@@ -17,6 +17,7 @@ class ExpenseFields {
   static const String createdAt = 'createdAt';
   static const String updatedAt = 'updatedAt';
   static const String deletedAt = 'deletedAt';
+  static const String expenseDate = 'expenseDate';
 }
 
 class Expense extends Base {
@@ -24,12 +25,14 @@ class Expense extends Base {
   final String category;
   final double amount;
   final String description;
+  final DateTime expenseDate;
 
   const Expense._({
     this.id,
     required this.category,
     required this.description,
     required this.amount,
+    required this.expenseDate,
     super.createdAt,
     super.updatedAt,
     super.deletedAt,
@@ -39,7 +42,8 @@ class Expense extends Base {
     return Expense._(
         category: expenseDto.category,
         description: expenseDto.description,
-        amount: expenseDto.amount);
+        amount: expenseDto.amount,
+        expenseDate: expenseDto.expenseDate);
   }
 
   factory Expense.fromJson(Map<String, Object?> json) => Expense._(
@@ -50,6 +54,9 @@ class Expense extends Base {
         createdAt: DateTime.tryParse(json.parseString(ExpenseFields.createdAt)),
         updatedAt: DateTime.tryParse(json.parseString(ExpenseFields.updatedAt)),
         deletedAt: DateTime.tryParse(json.parseString(ExpenseFields.deletedAt)),
+        expenseDate:
+            DateTime.tryParse(json.parseString(ExpenseFields.expenseDate)) ??
+                DateTime.now(),
       );
 
   Map<String, Object?> toJsonCreate() => {
@@ -58,6 +65,7 @@ class Expense extends Base {
         ExpenseFields.description: description,
         ExpenseFields.amount: amount,
         ExpenseFields.createdAt: DateTime.now().toUtc().toString(),
+        ExpenseFields.expenseDate: expenseDate.toString(),
       };
 
   Map<String, Object?> toJsonUpdate() => {
@@ -67,5 +75,6 @@ class Expense extends Base {
         ExpenseFields.amount: amount,
         ExpenseFields.createdAt: createdAt.toString(),
         ExpenseFields.updatedAt: DateTime.now().toUtc().toString(),
+        ExpenseFields.expenseDate: expenseDate.toString(),
       };
 }
