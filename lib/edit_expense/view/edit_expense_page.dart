@@ -6,6 +6,7 @@ import 'package:flutter_todos/backend/models/expense.dart';
 import 'package:flutter_todos/backend/repository/expense_repository.dart';
 import 'package:flutter_todos/edit_expense/edit_expense.dart';
 import 'package:flutter_todos/l10n/l10n.dart';
+import 'package:intl/intl.dart';
 
 class EditExpensePage extends StatelessWidget {
   const EditExpensePage({super.key});
@@ -75,12 +76,17 @@ class EditExpenseView extends StatelessWidget {
             ? const CupertinoActivityIndicator()
             : const Icon(Icons.check_rounded),
       ),
-      body: const CupertinoScrollbar(
+      body: CupertinoScrollbar(
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.all(16),
             child: Column(
-              children: [_DescriptionField(), _CategoryField(), _AmountField()],
+              children: [
+                ExpenseDateField(),
+                _DescriptionField(),
+                _CategoryField(),
+                _AmountField()
+              ],
             ),
           ),
         ),
@@ -184,6 +190,50 @@ class _AmountField extends StatelessWidget {
             .read<EditExpenseBloc>()
             .add(EditExpenseAmountChanged(double.parse(value)));
       },
+    );
+  }
+}
+
+class ExpenseDateField extends StatefulWidget {
+  @override
+  _ExpenseDateField createState() => _ExpenseDateField();
+}
+
+class _ExpenseDateField extends State<ExpenseDateField> {
+  TextEditingController _textEditingController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final state = context.watch<EditExpenseBloc>().state;
+    _textEditingController.text =
+        DateFormat('yyyy-MM-dd').format(state.expenseDate!);
+
+    return TextFormField(
+      controller: _textEditingController,
+      decoration: InputDecoration(
+          icon: Icon(Icons.calendar_today), //icon of text field
+          labelText: l10n.expenseDateTitleLabel //label text of field
+          ),
+      onTap: () async {
+        DateTime? pickedDate = await showDatePicker(
+            context: context,
+            initialDate: state.expenseDate!,
+            firstDate: DateTime(
+                2000), //DateTime.now() - not to allow to choose before today.
+            lastDate: DateTime(2101));
+
+        if (pickedDate != null) {
+          String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+          setState(() {
+            _textEditingController.text = formattedDate;
+          });
+          context
+              .read<EditExpenseBloc>()
+              .add(EditExpenseDateChanged(pickedDate));
+        }
+      },
+      readOnly: true,
     );
   }
 }

@@ -109,6 +109,10 @@
   "@editExpenseSaveButtonTooltip": {
     "description": "Tooltip text shown in the save button on the Expense Edit Page"
   },
+  "expenseDateTitleLabel": "Enter Date",
+  "@editExpenseSaveButtonTooltip": {
+    "description": "Label text shown in the date field on the Expense Edit and creation Page"
+  },
   "incomeOverviewAppBarTitle": "Income",
   "@incomeOverviewAppBarTitle": {
     "description": "Title text shown in the AppBar of the Income Overview Page"

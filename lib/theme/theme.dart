@@ -12,6 +12,16 @@ class ExpensesTheme {
       snackBarTheme: const SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
       ),
+      inputDecorationTheme: InputDecorationTheme(
+        labelStyle: const TextStyle(
+          color: Color.fromARGB(255, 0, 79, 10),
+        ),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: Color.fromARGB(255, 0, 79, 10),
+          ),
+        ),
+      ),
     );
   }
 
