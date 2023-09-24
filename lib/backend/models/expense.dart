@@ -65,6 +65,7 @@ class Expense extends Base {
         ExpenseFields.description: description,
         ExpenseFields.amount: amount,
         ExpenseFields.createdAt: DateTime.now().toUtc().toString(),
+        ExpenseFields.updatedAt: DateTime.now().toUtc().toString(),
         ExpenseFields.expenseDate: expenseDate.toString(),
       };
 

@@ -108,6 +108,7 @@ class _DescriptionField extends StatelessWidget {
         hintText: hintText,
       ),
       maxLength: 300,
+      minLines: 2,
       maxLines: 7,
       inputFormatters: [
         LengthLimitingTextInputFormatter(300),
@@ -140,6 +141,7 @@ class _CategoryField extends StatelessWidget {
         hintText: hintText,
       ),
       maxLength: 300,
+      minLines: 2,
       maxLines: 7,
       inputFormatters: [
         LengthLimitingTextInputFormatter(300),
@@ -164,13 +166,15 @@ class _AmountField extends StatelessWidget {
     return TextFormField(
       key: const Key('editExpenseView_amount_textFormField'),
       keyboardType: TextInputType.numberWithOptions(decimal: true),
-      initialValue: state.amount.toString(),
+      initialValue: state.amount == 0 ? null : state.amount.toString(),
+      autofillHints: ['0.0'],
       decoration: InputDecoration(
         enabled: !state.status.isLoadingOrSuccess,
         labelText: l10n.editExpenseAmountLabel,
         hintText: hintText.toString(),
       ),
       maxLength: 300,
+      minLines: 2,
       maxLines: 7,
       inputFormatters: [
         LengthLimitingTextInputFormatter(300),
